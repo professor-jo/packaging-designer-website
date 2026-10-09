@@ -1,0 +1,40 @@
+---
+// A dashed "dieline" frame with crop marks on two corners.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class:list={['frame', className]}>
+  <span class="crop tl" aria-hidden="true"></span>
+  <span class="crop br" aria-hidden="true"></span>
+  <slot />
+</div>
+
+<style>
+  .frame {
+    position: relative;
+    background: var(--paper);
+    border: 2px dashed var(--fold);
+    padding: 10px;
+  }
+  .crop {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 0 solid var(--ink);
+  }
+  .tl {
+    top: -10px;
+    left: -10px;
+    border-top-width: 2px;
+    border-left-width: 2px;
+  }
+  .br {
+    bottom: -10px;
+    right: -10px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+</style>

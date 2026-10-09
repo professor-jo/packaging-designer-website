@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+// Replace with your own background, clients and services.
+const services = ['Structural packaging', 'Dielines & print production', 'Brand identity', 'Label & illustration'];
+const clients = ['Client One', 'Client Two', 'Client Three', 'Client Four'];
+---
+
+<Base title="About">
+  <section class="wrap about">
+    <p class="label">About</p>
+    <h1>{site.role} based in {site.location}.</h1>
+    <div class="cols">
+      <div class="bio">
+        <p>
+          Write a short bio here: how you came to packaging, what kinds of products you like working on, and how
+          you approach a brief — from structure and materials through to print finishing.
+        </p>
+        <p>Available for freelance and studio collaborations.</p>
+      </div>
+      <div>
+        <h2 class="label">Services</h2>
+        <ul>{services.map((s) => <li>{s}</li>)}</ul>
+        <h2 class="label">Selected clients</h2>
+        <ul>{clients.map((c) => <li>{c}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about {
+    padding-top: clamp(48px, 8vw, 96px);
+  }
+  h1 {
+    font-size: clamp(52px, 8vw, 104px);
+    max-width: 14ch;
+    margin-top: 16px;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(32px, 6vw, 96px);
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 2px dashed var(--ink);
+  }
+  .bio p {
+    font-family: var(--font-text);
+    font-size: 19px;
+    max-width: 52ch;
+    margin: 0 0 1em;
+  }
+  h2.label {
+    font-family: var(--font-mono);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px;
+  }
+  li {
+    padding: 8px 0;
+    border-bottom: 2px dashed var(--fold);
+  }
+  @media (max-width: 720px) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,146 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getProjects } from '../data/projects';
+import { mosaicSize } from '../data/mosaic';
+import { site } from '../data/site';
+
+const projects = await getProjects();
+const categories = [...new Set(projects.map((p) => p.data.category))];
+const [before, after] = site.headline.split(site.headlineAccent);
+---
+
+<Base>
+  <section class="wrap hero">
+    <h1>
+      {before}{after !== undefined ? <><span class="accent">{site.headlineAccent}</span>{after}</> : null}
+    </h1>
+    <div class="side">
+      <p>{site.intro}</p>
+      {site.available && <p class="stamp label">Based in {site.location} — open for work</p>}
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="work-heading">
+    <div class="bar">
+      <h2 id="work-heading" class="label">Selected work ({projects.length})</h2>
+      {
+        categories.length > 1 && (
+          <div class="filters label" role="group" aria-label="Filter by category">
+            <button type="button" data-filter="all" aria-pressed="true">All</button>
+            {categories.map((c) => (
+              <button type="button" data-filter={c} aria-pressed="false">
+                {c}
+              </button>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <div class="grid">
+      {projects.map((p, i) => <ProjectCard project={p} size={mosaicSize(i)} eager={i < 2} />)}
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { mosaicSize } from '../data/mosaic';
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = [...document.querySelectorAll<HTMLElement>('.grid > [data-category]')];
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      // Re-flow the mosaic so the visible cards keep the big/small rhythm.
+      let i = 0;
+      for (const c of cards) {
+        c.hidden = f !== 'all' && c.dataset.category !== f;
+        if (!c.hidden) c.dataset.size = mosaicSize(i++);
+      }
+    }),
+  );
+</script>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 24px;
+    align-items: end;
+    padding-block: clamp(48px, 8vw, 64px) 56px;
+  }
+  h1 {
+    grid-column: span 8;
+    font-size: clamp(52px, 7.5vw, 96px);
+  }
+  .accent {
+    color: var(--accent);
+  }
+  .side {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 14px;
+  }
+  .side p {
+    margin: 0;
+  }
+  .stamp {
+    align-self: flex-start;
+    padding: 10px 14px;
+    border: 2px solid var(--ink);
+  }
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-block: 16px;
+    border-top: 2px dashed var(--ink);
+    margin-bottom: 32px;
+  }
+  .bar h2 {
+    font-family: var(--font-mono);
+    line-height: 1.6;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .filters button {
+    font: inherit;
+    padding: 8px 14px;
+    min-height: 40px;
+    border: 2px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .filters button:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .filters button[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--kraft);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 40px 24px;
+  }
+  .grid > :global([hidden]) {
+    display: none;
+  }
+  @media (max-width: 900px) {
+    h1,
+    .side {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

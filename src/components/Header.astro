@@ -1,0 +1,54 @@
+---
+import { site } from '../data/site';
+
+const path = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'Work' },
+  { href: '/about/', label: 'About' },
+];
+const isActive = (href: string) =>
+  href === '/' ? path === '/' || path.startsWith('/work') : path.startsWith(href);
+---
+
+<header class="wrap">
+  <div class="bar label">
+    <a href="/">{site.name} / Packaging</a>
+    <nav aria-label="Main">
+      {
+        links.map((l) => (
+          <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>
+            {l.label}
+          </a>
+        ))
+      }
+      <a href={`mailto:${site.email}`}>Contact</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-block: 24px;
+    border-bottom: 2px dashed var(--ink);
+    font-size: 13px;
+  }
+  a {
+    text-decoration: none;
+  }
+  nav {
+    display: flex;
+    gap: 24px;
+  }
+  nav a {
+    padding-block: 4px;
+  }
+  a:hover,
+  nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+</style>
