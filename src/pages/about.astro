@@ -1,10 +1,39 @@
 ---
 import Base from '../layouts/Base.astro';
+import Frame from '../components/Frame.astro';
 import { site } from '../data/site';
 
-// Replace with your own background, clients and services.
-const services = ['Structural packaging', 'Dielines & print production', 'Brand identity', 'Label & illustration'];
-const clients = ['Client One', 'Client Two', 'Client Three', 'Client Four'];
+const services = ['Structural packaging design', 'Folding cartons', 'Dielines & prototypes', 'Cost estimating'];
+// Newest first. `points` are optional one-line highlights shown under the role.
+const experience = [
+  {
+    years: '2024–2026',
+    length: '2 yrs 3 mos',
+    role: 'Structural Designer / Estimator',
+    place: 'BA Folding Cartons',
+    location: 'Waterloo, ON',
+    type: 'Full-time',
+    points: ['Designed folding carton structures', 'Estimated production costs for new packaging'],
+  },
+  {
+    years: '2022',
+    length: '3 mos',
+    role: 'Structural Designer',
+    place: 'Post Packaging',
+    location: 'Windsor, ON',
+    type: 'Co-op',
+    points: [],
+  },
+  {
+    years: '2022–2023',
+    length: '',
+    role: 'Diploma, Packaging Engineering',
+    place: 'Conestoga College',
+    location: 'Ontario',
+    type: 'Education',
+    points: [],
+  },
+];
 ---
 
 <Base title="About">
@@ -14,18 +43,60 @@ const clients = ['Client One', 'Client Two', 'Client Three', 'Client Four'];
     <div class="cols">
       <div class="bio">
         <p>
-          Write a short bio here: how you came to packaging, what kinds of products you like working on, and how
-          you approach a brief — from structure and materials through to print finishing.
+          I'm a packaging designer with a background in <span class="highlight">packaging engineering</span>. After
+          studying Packaging Engineering at Conestoga College, I spent <span class="highlight">over two years</span> as a
+          <span class="highlight"> Structural Designer and Estimator</span> at BA Folding Cartons in Waterloo, Ontario,
+          designing <span class="highlight">folding carton structures</span> and costing them for production.
         </p>
-        <p>Available for freelance and studio collaborations.</p>
+        <p>
+          That mix shapes how I work. Every design starts with the structure: how it folds, how it protects what's
+          inside, and how it runs through production. The result is packaging that looks good on the shelf and is 
+           practical to make.
+        </p>
+        <p><span class="highlight">Open to full-time roles</span> and freelance projects.</p>
       </div>
       <div>
         <h2 class="label">Services</h2>
         <ul>{services.map((s) => <li>{s}</li>)}</ul>
-        <h2 class="label">Selected clients</h2>
-        <ul>{clients.map((c) => <li>{c}</li>)}</ul>
       </div>
     </div>
+  </section>
+
+  <section class="wrap experience" aria-labelledby="exp-heading">
+    <div class="exp-head">
+      <h2 id="exp-heading">Experience</h2>
+      <p class="label">Over <span class="highlight">2 years</span> in structural packaging design</p>
+    </div>
+    <ol>
+      {
+        experience.map((e, i) => (
+          <li>
+            <Frame>
+              <div class="job">
+                <div class="when">
+                  <span class:list={['years', { current: i === 0 }]}>{e.years}</span>
+                  {e.length && <span class="label">{e.length}</span>}
+                </div>
+                <div class="what">
+                  <h3>{e.role}</h3>
+                  <p class="label">
+                    {e.place} · {e.location}
+                  </p>
+                  {e.points.length > 0 && (
+                    <ul class="points">
+                      {e.points.map((pt) => (
+                        <li>{pt}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                <span class="stamp label">{e.type}</span>
+              </div>
+            </Frame>
+          </li>
+        ))
+      }
+    </ol>
   </section>
 </Base>
 
@@ -66,9 +137,105 @@ const clients = ['Client One', 'Client Two', 'Client Three', 'Client Four'];
     padding: 8px 0;
     border-bottom: 2px dashed var(--fold);
   }
+  .highlight {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .experience {
+    margin-top: clamp(72px, 10vw, 120px);
+  }
+  .exp-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 2px dashed var(--ink);
+    margin-bottom: 40px;
+  }
+  .exp-head h2 {
+    font-size: clamp(52px, 8vw, 104px);
+  }
+  .exp-head p {
+    margin: 0;
+  }
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  ol > li {
+    padding: 0;
+    border: 0;
+  }
+  .job {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) 2.4fr auto;
+    gap: 24px 40px;
+    align-items: start;
+    padding: clamp(16px, 3vw, 28px);
+  }
+  .when {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .years {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(40px, 5vw, 60px);
+    line-height: 0.9;
+  }
+  .years.current {
+    color: var(--accent);
+  }
+  .when .label {
+    color: var(--muted);
+  }
+  h3 {
+    font-size: clamp(28px, 3.4vw, 40px);
+    line-height: 0.95;
+  }
+  .what > .label {
+    margin: 10px 0 0;
+  }
+  .points {
+    margin: 16px 0 0;
+    font-family: var(--font-text);
+    font-size: 16px;
+  }
+  .points li {
+    padding: 6px 0 6px 20px;
+    position: relative;
+    border-bottom: 0;
+  }
+  .points li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+  .stamp {
+    padding: 8px 12px;
+    border: 2px solid var(--ink);
+    white-space: nowrap;
+    transform: rotate(-3deg);
+  }
   @media (max-width: 720px) {
     .cols {
       grid-template-columns: 1fr;
+    }
+    .job {
+      grid-template-columns: 1fr;
+    }
+    .stamp {
+      justify-self: start;
+      grid-row: 1;
     }
   }
 </style>

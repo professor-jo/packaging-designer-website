@@ -1,9 +1,10 @@
 // Edit these to personalise the site.
 export const site = {
-  name: 'Designer Name',
+  name: 'Yeonseo Pyo',
   role: 'Packaging Designer',
-  location: 'Seoul',
-  email: 'hello@example.com',
+  location: 'Canada',
+  email: 'yeonseopyeo@gmail.com',
+  phone: '+82 10-9766-2922', // shown in the Contact popup
   // Home page headline. `headlineAccent` is the word drawn in red.
   headline: 'Packaging that tells the story before the box is opened.',
   headlineAccent: 'before',
@@ -12,6 +13,6 @@ export const site = {
   social: [
     { label: 'Instagram', href: 'https://instagram.com/' },
     { label: 'Behance', href: 'https://behance.net/' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/amanda-pyo-06296522b/' },
   ],
 };

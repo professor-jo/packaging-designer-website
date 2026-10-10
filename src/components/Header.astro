@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import Frame from './Frame.astro';
 
 const path = Astro.url.pathname;
 const links = [
@@ -8,6 +9,7 @@ const links = [
 ];
 const isActive = (href: string) =>
   href === '/' ? path === '/' || path.startsWith('/work') : path.startsWith(href);
+const tel = site.phone.replace(/[^\d+]/g, '');
 ---
 
 <header class="wrap">
@@ -21,10 +23,41 @@ const isActive = (href: string) =>
           </a>
         ))
       }
-      <a href={`mailto:${site.email}`}>Contact</a>
+      <button type="button" class="contact-open" aria-haspopup="dialog">Contact</button>
     </nav>
   </div>
 </header>
+
+<dialog id="contact" aria-labelledby="contact-title">
+  <Frame>
+    <div class="panel">
+      <div class="top">
+        <h2 id="contact-title">Contact</h2>
+        <button type="button" class="close label" aria-label="Close">Close ×</button>
+      </div>
+      <dl>
+        <div>
+          <dt class="label">Email</dt>
+          <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+        </div>
+        <div>
+          <dt class="label">Phone</dt>
+          <dd><a href={`tel:${tel}`}>{site.phone}</a></dd>
+        </div>
+      </dl>
+    </div>
+  </Frame>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#contact')!;
+  document.querySelectorAll('.contact-open').forEach((b) => b.addEventListener('click', () => dialog.showModal()));
+  dialog.querySelector('.close')!.addEventListener('click', () => dialog.close());
+  // Close when clicking the backdrop outside the panel.
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+</script>
 
 <style>
   .bar {
@@ -44,11 +77,85 @@ const isActive = (href: string) =>
     display: flex;
     gap: 24px;
   }
-  nav a {
+  nav a,
+  .contact-open {
     padding-block: 4px;
   }
+  .contact-open {
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding-inline: 0;
+    cursor: pointer;
+  }
   a:hover,
+  .contact-open:hover,
   nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+
+  dialog {
+    width: min(560px, calc(100% - 32px));
+    padding: 12px;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    overflow: visible;
+  }
+  dialog::backdrop {
+    background: rgb(42 30 18 / 0.55);
+  }
+  .panel {
+    padding: clamp(16px, 4vw, 28px);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 2px dashed var(--ink);
+  }
+  h2 {
+    font-size: 56px;
+  }
+  .close {
+    font-family: var(--font-mono);
+    background: none;
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    padding: 8px 12px;
+    min-height: 40px;
+    cursor: pointer;
+  }
+  .close:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  dl {
+    margin: 0;
+  }
+  dl > div {
+    padding-block: 20px;
+    border-bottom: 2px dashed var(--fold);
+  }
+  dt {
+    color: var(--muted);
+  }
+  dd {
+    margin: 6px 0 0;
+  }
+  dd a {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(28px, 6vw, 40px);
+    line-height: 1;
+        overflow-wrap: anywhere;
+  }
+  dd a:hover {
     color: var(--accent);
   }
 </style>
