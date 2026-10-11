@@ -10,9 +10,9 @@ coverAlt: "Flat dieline of the Elixir 12-pack display carton with spec notes, a 
 gallery:
   - src: ./02.jpg
     alt: "Front panel: ELIXIR Wellness Shots in black, Honey + Ginger + Lemon, and the yellow Well script logo surrounded by line illustrations of lemon, ginger and honeycomb"
-    caption: "Front panel — two colours, Pantone 129 C and black"
+    caption: "Front panel"
   - src: ./03.jpg
-    alt: "French side panel with a bilingual nutrition facts table beside ELIXIR, Shots de bien-être, Miel Gingembre Citron and the Well logo"
-    caption: "French panel — bilingual nutrition facts for the Canadian market"
+    alt: "Back panel in French, with a bilingual nutrition facts table beside ELIXIR, Shots de bien-être, Miel Gingembre Citron and the Well logo"
+    caption: "Back panel"
 order: 4
 ---
