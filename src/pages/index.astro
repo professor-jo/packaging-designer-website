@@ -21,9 +21,8 @@ const [before, after] = site.headline.split(site.headlineAccent);
     </div>
   </section>
 
-  <section class="wrap" aria-labelledby="work-heading">
+  <section class="wrap" aria-label="Work">
     <div class="bar">
-      <h2 id="work-heading" class="label">Selected work ({projects.length})</h2>
       {
         categories.length > 1 && (
           <div class="filters label" role="group" aria-label="Filter by category">
@@ -102,10 +101,6 @@ const [before, after] = site.headline.split(site.headlineAccent);
     padding-block: 16px;
     border-top: 2px dashed var(--ink);
     margin-bottom: 32px;
-  }
-  .bar h2 {
-    font-family: var(--font-mono);
-    line-height: 1.6;
   }
   .filters {
     display: flex;

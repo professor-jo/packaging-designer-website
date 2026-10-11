@@ -1,36 +1,18 @@
 ---
-# Replace everything in [brackets], and swap the .jpg files in this folder
-# for your own (keep the names, or update the paths below).
-title: "[Project 2]"
-client: "[Client]"
-year: 2026
-category: "[Category]"
-summary: "[One or two sentences: the product, and what the packaging needed to achieve.]"
+title: "Elixir Wellness Shots"
+client: "Well Juicery"
+year: 2024
+category: "Food & Beverage"
+summary: "A bilingual 12-pack display carton for Well's honey, ginger and lemon wellness shots. It holds twelve 60 ml bottles in a 3 × 4 grid and shows them through a cut-away front, printed in just Pantone 129 C and black."
 role: ["[Structural design]", "[Graphic design]"]
 cover: ./cover.jpg
-coverAlt: "[Describe the cover image]"
+coverAlt: "Flat dieline of the Elixir 12-pack display carton with spec notes, a line-type legend, Pantone 129 C and black swatches, and panel dimensions of 5 5/8 by 4 7/32 by 3 3/8 inches"
 gallery:
-  - src: ./01.jpg
-    alt: "[Describe this image]"
-    caption: "[Caption — e.g. the full range]"
-    wide: true
   - src: ./02.jpg
-    alt: "[Describe this image]"
-    caption: "[Caption — e.g. a print or finish detail]"
+    alt: "Front panel: ELIXIR Wellness Shots in black, Honey + Ginger + Lemon, and the yellow Well script logo surrounded by line illustrations of lemon, ginger and honeycomb"
+    caption: "Front panel — two colours, Pantone 129 C and black"
   - src: ./03.jpg
-    alt: "[Describe this image]"
-    caption: "[Caption — e.g. the flat dieline]"
-order: 2
+    alt: "French side panel with a bilingual nutrition facts table beside ELIXIR, Shots de bien-être, Miel Gingembre Citron and the Well logo"
+    caption: "French panel — bilingual nutrition facts for the Canadian market"
+order: 4
 ---
-
-## The brief
-
-[What the client came to you with: the product, the audience, the shelf it competes on, and any constraints.]
-
-## Approach
-
-[How you worked through it: research, sketches, structural prototypes, and the key decisions.]
-
-## Outcome
-
-[What was produced and the result: launch, retail, sales or awards.]

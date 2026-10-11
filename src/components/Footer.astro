@@ -50,7 +50,14 @@ import { site } from '../data/site';
     gap: 20px;
   }
   ul a {
+    display: inline-block;
+    padding: 12px 22px;
+    border: 2px solid var(--ink);
+    font-size: 18px;
     text-decoration: none;
+  }
+  ul a:hover {
+    border-color: var(--accent);
   }
   .copy {
     grid-column: 1 / -1;

@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Frame from './Frame.astro';
+import { url } from '../data/url';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -13,7 +14,7 @@ const { project, size, eager = false } = Astro.props;
 const { title, category, year, cover, coverAlt } = project.data;
 ---
 
-<a class="card" href={`/work/${project.id}/`} data-category={category} data-size={size}>
+<a class="card" href={url(`/work/${project.id}/`)} data-category={category} data-size={size}>
   <Frame class="media">
     <Image
       src={cover}

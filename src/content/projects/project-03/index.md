@@ -1,36 +1,18 @@
 ---
-# Replace everything in [brackets], and swap the .jpg files in this folder
-# for your own (keep the names, or update the paths below).
-title: "[Project 3]"
-client: "[Client]"
-year: 2026
-category: "[Category]"
-summary: "[One or two sentences: the product, and what the packaging needed to achieve.]"
+title: "PC Juice Shots"
+client: "Loblaw Companies (President's Choice) × Well Juicery"
+year: 2024
+category: "Food & Beverage"
+summary: "A bilingual 4 × 60 ml carton for President's Choice Açaí + Blueberry juice shots, made by Well Juicery. It's a 2.8125 × 2.8125 × 3.375 in paperboard carton printed flexo in CMYK plus four Pantone spot colours."
 role: ["[Structural design]", "[Graphic design]"]
 cover: ./cover.jpg
-coverAlt: "[Describe the cover image]"
+coverAlt: "Flat dieline of the lilac PC Açaí + Blueberry juice shots carton, with panel dimensions and press and grain direction"
 gallery:
-  - src: ./01.jpg
-    alt: "[Describe this image]"
-    caption: "[Caption — e.g. the full range]"
-    wide: true
   - src: ./02.jpg
-    alt: "[Describe this image]"
-    caption: "[Caption — e.g. a print or finish detail]"
+    alt: "English front panel: PC logo, Juice Shots, a green With Antioxidant band over açaí berries, blueberries and pineapple, and 4 × 60 mL 240 mL"
+    caption: "Front panel — English"
   - src: ./03.jpg
-    alt: "[Describe this image]"
-    caption: "[Caption — e.g. the flat dieline]"
+    alt: "French back panel matching the front: Shots de jus, a green Avec antioxydants band, Açai + Bleuet, and Préparé au Canada"
+    caption: "Back panel — the same layout in French"
 order: 3
 ---
-
-## The brief
-
-[What the client came to you with: the product, the audience, the shelf it competes on, and any constraints.]
-
-## Approach
-
-[How you worked through it: research, sketches, structural prototypes, and the key decisions.]
-
-## Outcome
-
-[What was produced and the result: launch, retail, sales or awards.]

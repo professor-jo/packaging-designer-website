@@ -1,8 +1,9 @@
 ---
 import { site } from '../data/site';
 import Frame from './Frame.astro';
+import { url, stripBase } from '../data/url';
 
-const path = Astro.url.pathname;
+const path = stripBase(Astro.url.pathname);
 const links = [
   { href: '/', label: 'Work' },
   { href: '/about/', label: 'About' },
@@ -14,11 +15,11 @@ const tel = site.phone.replace(/[^\d+]/g, '');
 
 <header class="wrap">
   <div class="bar label">
-    <a href="/">{site.name} / Packaging</a>
+    <a href={url()}>{site.name} / Packaging</a>
     <nav aria-label="Main">
       {
         links.map((l) => (
-          <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>
+          <a href={url(l.href)} aria-current={isActive(l.href) ? 'page' : undefined}>
             {l.label}
           </a>
         ))
