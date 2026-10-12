@@ -40,6 +40,16 @@ const [before, after] = site.headline.split(site.headlineAccent);
     <div class="grid">
       {projects.map((p, i) => <ProjectCard project={p} size={mosaicSize(i)} eager={i < 2} />)}
     </div>
+
+    <!-- Phones: the grid becomes a swipe carousel; these dots show and move the position. -->
+    <div class="dots" aria-label="Choose project">
+      {
+        projects.map((p, i) => (
+          <button type="button" aria-label={`Show ${p.data.title}`} aria-current={i === 0 ? 'true' : undefined} />
+        ))
+      }
+      <span class="count label" aria-live="polite">1 / {projects.length}</span>
+    </div>
   </section>
 </Base>
 
@@ -60,6 +70,27 @@ const [before, after] = site.headline.split(site.headlineAccent);
       }
     }),
   );
+
+  // Carousel dots (phones). Track which card is closest to the left edge.
+  const grid = document.querySelector<HTMLElement>('.grid')!;
+  const dots = [...document.querySelectorAll<HTMLButtonElement>('.dots button')];
+  const count = document.querySelector<HTMLElement>('.dots .count')!;
+  dots.forEach((d, i) => d.addEventListener('click', () => cards[i].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })));
+  let ticking = false;
+  grid.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      const left = grid.getBoundingClientRect().left;
+      let best = 0;
+      cards.forEach((c, i) => {
+        if (Math.abs(c.getBoundingClientRect().left - left) < Math.abs(cards[best].getBoundingClientRect().left - left)) best = i;
+      });
+      dots.forEach((d, i) => (i === best ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+      count.textContent = `${best + 1} / ${cards.length}`;
+    });
+  });
 </script>
 
 <style>
@@ -132,10 +163,72 @@ const [before, after] = site.headline.split(site.headlineAccent);
   .grid > :global([hidden]) {
     display: none;
   }
+  .dots {
+    display: none;
+  }
   @media (max-width: 900px) {
     h1,
     .side {
       grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 720px) {
+    .filters {
+      display: none;
+    }
+    .bar {
+      padding-block: 0;
+      margin-bottom: 24px;
+    }
+    /* Swipe carousel: one card per screen, with the next one peeking in. */
+    .grid {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter);
+      margin-inline: calc(-1 * var(--gutter));
+      padding-inline: var(--gutter);
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .grid::-webkit-scrollbar {
+      display: none;
+    }
+    .grid > :global(.card) {
+      flex: 0 0 86%;
+      scroll-snap-align: start;
+    }
+    .dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-top: 16px;
+    }
+    /* 32px tap target around a 12px dot. */
+    .dots button {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+    }
+    .dots button::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+    }
+    .dots button[aria-current='true']::before {
+      background: var(--ink);
+    }
+    .count {
+      margin-left: 8px;
     }
   }
 </style>

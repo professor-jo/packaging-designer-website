@@ -37,7 +37,9 @@ const { title, client, year, category, summary, role, cover, coverAlt, gallery }
 
     <div class="wrap">
       <Frame>
-        <Image src={cover} alt={coverAlt} widths={[800, 1400, 2000]} sizes="100vw" loading="eager" />
+        <button type="button" class="zoom" aria-label="Enlarge image">
+          <Image src={cover} alt={coverAlt} widths={[800, 1400, 2000]} sizes="100vw" loading="eager" />
+        </button>
       </Frame>
     </div>
 
@@ -48,12 +50,14 @@ const { title, client, year, category, summary, role, cover, coverAlt, gallery }
             <figure class:list={{ wide: g.wide }}>
               {g.caption && <figcaption class="label">{g.caption}</figcaption>}
               <Frame>
-                <Image
-                  src={g.src}
-                  alt={g.alt}
-                  widths={g.wide ? [800, 1400, 2000] : [480, 800, 1200]}
-                  sizes={g.wide ? '100vw' : '(max-width: 720px) 100vw, 50vw'}
-                />
+                <button type="button" class="zoom" aria-label="Enlarge image">
+                  <Image
+                    src={g.src}
+                    alt={g.alt}
+                    widths={g.wide ? [800, 1400, 2000] : [480, 800, 1200]}
+                    sizes={g.wide ? '100vw' : '(max-width: 720px) 100vw, 50vw'}
+                  />
+                </button>
               </Frame>
             </figure>
           ))}
@@ -78,7 +82,40 @@ const { title, client, year, category, summary, role, cover, coverAlt, gallery }
       )
     }
   </article>
+
+  <dialog id="zoom" aria-label="Enlarged image">
+    <button type="button" class="zoom-close label" aria-label="Close">Close ×</button>
+    <div class="zoom-body">
+      <img alt="" />
+    </div>
+    <p class="zoom-hint label">Tap image to see full size</p>
+  </dialog>
 </Base>
+
+<script>
+  // Tap any project image to view it full screen; tap again to toggle full size.
+  const box = document.querySelector<HTMLDialogElement>('#zoom')!;
+  const big = box.querySelector('img')!;
+  document.querySelectorAll<HTMLButtonElement>('button.zoom').forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img')!;
+      // Use the largest file from the srcset.
+      const largest = img.srcset
+        .split(',')
+        .map((c) => c.trim().split(/\s+/))
+        .sort((a, b) => parseInt(b[1]) - parseInt(a[1]))[0];
+      big.src = largest ? largest[0] : img.currentSrc || img.src;
+      big.alt = img.alt;
+      box.classList.remove('full');
+      box.showModal();
+    }),
+  );
+  big.addEventListener('click', () => box.classList.toggle('full'));
+  box.querySelector('.zoom-close')!.addEventListener('click', () => box.close());
+  box.addEventListener('click', (e) => {
+    if (e.target === box) box.close();
+  });
+</script>
 
 <style>
   .intro {
@@ -148,6 +185,69 @@ const { title, client, year, category, summary, role, cover, coverAlt, gallery }
     letter-spacing: 0;
     color: var(--ink);
   }
+  button.zoom {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+  }
+  #zoom {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 56px 12px 40px;
+    border: 0;
+    background: rgb(20 14 8);
+  }
+  #zoom::backdrop {
+    background: rgb(20 14 8);
+  }
+  .zoom-body {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: grid;
+    place-items: center;
+  }
+  .zoom-body img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    cursor: zoom-in;
+  }
+  #zoom.full .zoom-body {
+    place-items: start;
+  }
+  #zoom.full .zoom-body img {
+    max-width: none;
+    max-height: none;
+    cursor: zoom-out;
+  }
+  .zoom-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-family: var(--font-mono);
+    padding: 8px 12px;
+    min-height: 40px;
+    background: var(--kraft);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    cursor: pointer;
+  }
+  .zoom-hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    margin: 0;
+    text-align: center;
+    color: var(--paper);
+  }
   .pager {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -179,7 +279,7 @@ const { title, client, year, category, summary, role, cover, coverAlt, gallery }
   @media (max-width: 720px) {
     .gallery,
     .pager {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>
