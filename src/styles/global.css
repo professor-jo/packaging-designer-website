@@ -81,3 +81,54 @@ h3 {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* Page transitions: the new page fades in and rises slightly while the header
+   stays put. Uses the browser's built-in view transitions; browsers without
+   support just load the page normally. */
+@view-transition {
+  navigation: auto;
+}
+@keyframes page-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+::view-transition-old(root) {
+  animation: page-out 0.15s ease-in both;
+}
+::view-transition-new(root) {
+  animation: page-in 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+::view-transition-group(site-header) {
+  animation: none;
+}
+
+/* "Stamp" press on header links and buttons. */
+@keyframes stamp {
+  40% {
+    transform: scale(0.88) rotate(-2deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+.stamping {
+  display: inline-block;
+  animation: stamp 0.22s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+  .stamping {
+    animation: none;
+  }
+}

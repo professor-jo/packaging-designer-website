@@ -13,7 +13,7 @@ const isActive = (href: string) =>
 const tel = site.phone.replace(/[^\d+]/g, '');
 ---
 
-<header class="wrap">
+<header class="wrap" style="view-transition-name: site-header">
   <div class="bar label">
     <a href={url()}>{site.name} / Packaging</a>
     <nav aria-label="Main">
@@ -57,6 +57,24 @@ const tel = site.phone.replace(/[^\d+]/g, '');
     b.addEventListener('click', () => dialog.showModal()),
   );
   dialog.querySelector('.close')!.addEventListener('click', () => dialog.close());
+
+  // Stamp the clicked header link, then go to the page once the stamp lands.
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('header .bar a, header .contact-open').forEach((el) =>
+    el.addEventListener('click', (e) => {
+      el.classList.remove('stamping');
+      void el.offsetWidth; // restart the animation if clicked again
+      el.classList.add('stamping');
+      el.addEventListener('animationend', () => el.classList.remove('stamping'), { once: true });
+
+      const link = el as HTMLAnchorElement;
+      const plainClick = !(e as MouseEvent).metaKey && !(e as MouseEvent).ctrlKey && !(e as MouseEvent).shiftKey;
+      if (link.href && plainClick && !reduceMotion) {
+        e.preventDefault();
+        setTimeout(() => (location.href = link.href), 180);
+      }
+    }),
+  );
   // Close when clicking the backdrop outside the panel.
   dialog.addEventListener('click', (e) => {
     if (e.target === dialog) dialog.close();
