@@ -16,6 +16,7 @@ const projects = defineCollection({
       role: z.array(z.string()).default([]), // e.g. Structural design, Illustration
       cover: image(),
       coverAlt: z.string(),
+      cardImage: image().optional(), // shown on the home card on phones (e.g. the front panel)
       gallery: z
         .array(
           z.object({

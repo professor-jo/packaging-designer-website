@@ -193,6 +193,10 @@ const tel = site.phone.replace(/[^\d+]/g, '');
     nav {
       gap: 16px;
     }
+    /* Phones use the pinned Contact button instead of the header link. */
+    nav .contact-open {
+      display: none;
+    }
     .fab {
       display: block;
     }

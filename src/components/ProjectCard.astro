@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Frame from './Frame.astro';
 import { url } from '../data/url';
@@ -11,18 +11,23 @@ interface Props {
 }
 
 const { project, size, eager = false } = Astro.props;
-const { title, category, year, cover, coverAlt } = project.data;
+const { title, category, year, cover, coverAlt, cardImage } = project.data;
+// On phones the card shows the front panel instead of a crop of the wide dieline.
+const phone = cardImage ? await getImage({ src: cardImage, widths: [400, 800], format: 'webp' }) : null;
 ---
 
 <a class="card" href={url(`/work/${project.id}/`)} data-category={category} data-size={size}>
   <Frame class="media">
-    <Image
-      src={cover}
-      alt={coverAlt}
-      widths={[480, 800, 1200]}
-      sizes="(max-width: 720px) 100vw, 66vw"
-      loading={eager ? 'eager' : 'lazy'}
-    />
+    <picture>
+      {phone && <source media="(max-width: 720px)" srcset={phone.srcSet.attribute} sizes="86vw" />}
+      <Image
+        src={cover}
+        alt={coverAlt}
+        widths={[480, 800, 1200]}
+        sizes="(max-width: 720px) 100vw, 66vw"
+        loading={eager ? 'eager' : 'lazy'}
+      />
+    </picture>
   </Frame>
   <div class="meta">
     <h2>{title}</h2>
@@ -50,6 +55,10 @@ const { title, category, year, cover, coverAlt } = project.data;
   }
   .card[data-size='small'] :global(.media) {
     height: 320px;
+  }
+  picture {
+    display: block;
+    height: 100%;
   }
   .card :global(img) {
     width: 100%;
@@ -81,6 +90,10 @@ const { title, category, year, cover, coverAlt } = project.data;
     .card[data-size] :global(.media) {
       height: auto;
       aspect-ratio: 4 / 5;
+    }
+    /* Show the whole front panel, not a crop. */
+    .card :global(img) {
+      object-fit: contain;
     }
   }
   @media (prefers-reduced-motion: reduce) {

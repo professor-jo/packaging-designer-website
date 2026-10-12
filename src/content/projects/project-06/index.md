@@ -7,6 +7,7 @@ summary: "A bilingual carton for Martin's Apple Smash, a 5 × 120 g multipack of
 role: ["[Structural design]", "[Graphic design]"]
 cover: ./cover.jpg
 coverAlt: "Flat dieline of the Martin's Apple Smash carton in pink and caramel, showing the English front and French back panels, a side panel, a nutrition panel, the tuck flaps and a hang tab"
+cardImage: ./02.jpg
 gallery:
   - src: ./02.jpg
     alt: "English front panel: Product of Canada, Martin's, the black Apple Smash wordmark, No artificial anything, no sugar added, a maple leaf, an apple slice and the apple + maple pouch"

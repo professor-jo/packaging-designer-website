@@ -7,6 +7,7 @@ summary: "A bilingual 4 × 60 ml carton for President's Choice Açaí + Blueberr
 role: ["[Structural design]", "[Graphic design]"]
 cover: ./cover.jpg
 coverAlt: "Flat dieline of the lilac PC Açaí + Blueberry juice shots carton, with panel dimensions and press and grain direction"
+cardImage: ./02.jpg
 gallery:
   - src: ./02.jpg
     alt: "English front panel: PC logo, Juice Shots, a green With Antioxidant band over açaí berries, blueberries and pineapple, and 4 × 60 mL 240 mL"

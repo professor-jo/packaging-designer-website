@@ -7,6 +7,7 @@ summary: "A shipper-style retail carton for Glad Take-Aways 52 oz bowls, a 50-pi
 role: ["[Structural design]", "[Graphic design]"]
 cover: ./cover.jpg
 coverAlt: "Flat dieline of the yellow and navy Glad Take-Aways 52 oz bowl carton, with four identical side panels, top and bottom flaps, glue areas and dimensions of 36 31/32 by 26 7/8 inches"
+cardImage: ./front.jpg
 gallery:
   - src: ./01.jpg
     alt: "The four side panels in a row, each showing the Glad logo, Take-Aways food storage containers, 50 pieces / 25 sets, a black bowl of chicken, potatoes and vegetables above a lidded bowl, and a navy 52 oz bowl band"

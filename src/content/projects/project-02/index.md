@@ -7,6 +7,7 @@ summary: "A bilingual 12-pack display carton for Well's honey, ginger and lemon 
 role: ["[Structural design]", "[Graphic design]"]
 cover: ./cover.jpg
 coverAlt: "Flat dieline of the Elixir 12-pack display carton with spec notes, a line-type legend, Pantone 129 C and black swatches, and panel dimensions of 5 5/8 by 4 7/32 by 3 3/8 inches"
+cardImage: ./02.jpg
 gallery:
   - src: ./02.jpg
     alt: "Front panel: ELIXIR Wellness Shots in black, Honey + Ginger + Lemon, and the yellow Well script logo surrounded by line illustrations of lemon, ginger and honeycomb"

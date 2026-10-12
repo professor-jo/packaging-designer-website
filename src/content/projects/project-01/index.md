@@ -7,6 +7,7 @@ summary: "A windowed carton for Dubble Bubble Bits & Pieces bubble gum: a 2.3 oz
 role: ["[Structural design]", "[Graphic design]"]
 cover: ./cover.jpg
 coverAlt: "Flat printed dieline of the yellow Dubble Bubble Bits & Pieces carton, showing the front, back, side panels, tuck flaps and glue flap laid out together"
+cardImage: ./02.jpg
 gallery:
   - src: ./02.jpg
     alt: "Front panel: Dubble Bubble logo above the red Bits & Pieces wordmark, with colourful gum pieces bursting around a shaped die-cut window"
