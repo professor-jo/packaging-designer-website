@@ -29,8 +29,6 @@ const tel = site.phone.replace(/[^\d+]/g, '');
   </div>
 </header>
 
-<!-- Phones only: a contact button pinned to the corner. -->
-<button type="button" class="contact-open fab label" aria-haspopup="dialog">Contact</button>
 
 <dialog id="contact" aria-labelledby="contact-title">
   <Frame>
@@ -165,26 +163,6 @@ const tel = site.phone.replace(/[^\d+]/g, '');
     color: var(--accent);
   }
 
-  /* Contact button pinned to the corner; shown on phones only. */
-  .fab {
-    display: none;
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-    z-index: 10;
-    padding: 14px 20px;
-    font-size: 14px;
-    background: var(--ink);
-    color: var(--kraft);
-    border: 2px solid var(--ink);
-    box-shadow: 4px 4px 0 var(--accent);
-  }
-  .fab:hover {
-    color: var(--kraft);
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-
   @media (max-width: 720px) {
     .bar {
       padding-block: 16px;
@@ -192,13 +170,6 @@ const tel = site.phone.replace(/[^\d+]/g, '');
     }
     nav {
       gap: 16px;
-    }
-    /* Phones use the pinned Contact button instead of the header link. */
-    nav .contact-open {
-      display: none;
-    }
-    .fab {
-      display: block;
     }
   }
 </style>
