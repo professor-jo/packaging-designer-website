@@ -26,28 +26,10 @@ const tel = site.phone.replace(/[^\d+]/g, '');
       }
       <button type="button" class="contact-open" aria-haspopup="dialog">Contact</button>
     </nav>
-    <button type="button" class="menu-open" aria-haspopup="dialog" aria-label="Open menu">☰ Menu</button>
   </div>
 </header>
 
-<!-- Phones only: full-screen menu, and a contact button pinned to the corner. -->
-<dialog id="menu" aria-label="Menu">
-  <div class="menu-top label">
-    <span>{site.name}</span>
-    <button type="button" class="close label" aria-label="Close menu">Close ×</button>
-  </div>
-  <nav class="menu-links" aria-label="Main">
-    {
-      links.map((l) => (
-        <a href={url(l.href)} aria-current={isActive(l.href) ? 'page' : undefined}>
-          {l.label}
-        </a>
-      ))
-    }
-    <button type="button" class="contact-open" aria-haspopup="dialog">Contact</button>
-  </nav>
-</dialog>
-
+<!-- Phones only: a contact button pinned to the corner. -->
 <button type="button" class="contact-open fab label" aria-haspopup="dialog">Contact</button>
 
 <dialog id="contact" aria-labelledby="contact-title">
@@ -73,20 +55,14 @@ const tel = site.phone.replace(/[^\d+]/g, '');
 
 <script>
   const dialog = document.querySelector<HTMLDialogElement>('#contact')!;
-  const menu = document.querySelector<HTMLDialogElement>('#menu')!;
   document.querySelectorAll('.contact-open').forEach((b) =>
-    b.addEventListener('click', () => {
-      menu.close();
-      dialog.showModal();
-    }),
+    b.addEventListener('click', () => dialog.showModal()),
   );
   dialog.querySelector('.close')!.addEventListener('click', () => dialog.close());
   // Close when clicking the backdrop outside the panel.
   dialog.addEventListener('click', (e) => {
     if (e.target === dialog) dialog.close();
   });
-  document.querySelector('.menu-open')!.addEventListener('click', () => menu.showModal());
-  menu.querySelector('.close')!.addEventListener('click', () => menu.close());
 </script>
 
 <style>
@@ -189,63 +165,9 @@ const tel = site.phone.replace(/[^\d+]/g, '');
     color: var(--accent);
   }
 
-  /* Phone-only pieces, hidden on larger screens. */
-  .menu-open,
+  /* Contact button pinned to the corner; shown on phones only. */
   .fab {
     display: none;
-  }
-  .menu-open {
-    font: inherit;
-    letter-spacing: inherit;
-    text-transform: inherit;
-    color: var(--ink);
-    background: none;
-    border: 2px solid var(--ink);
-    padding: 8px 12px;
-    min-height: 40px;
-    cursor: pointer;
-  }
-  #menu {
-    width: 100%;
-    max-width: none;
-    height: 100%;
-    max-height: none;
-    margin: 0;
-    padding: 24px var(--gutter);
-    background: var(--kraft);
-    overflow: auto;
-  }
-  #menu::backdrop {
-    background: var(--kraft);
-  }
-  .menu-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 2px dashed var(--ink);
-  }
-  .menu-links {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    margin-top: 24px;
-  }
-  .menu-links a,
-  .menu-links .contact-open {
-    width: 100%;
-    text-align: left;
-    padding-block: 16px;
-    border-bottom: 2px dashed var(--fold);
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 56px;
-    line-height: 1;
-    text-transform: uppercase;
-    letter-spacing: 0;
-  }
-  .fab {
     position: fixed;
     right: 16px;
     bottom: 16px;
@@ -265,13 +187,12 @@ const tel = site.phone.replace(/[^\d+]/g, '');
 
   @media (max-width: 720px) {
     .bar {
-      flex-wrap: nowrap;
       padding-block: 16px;
+      gap: 8px 16px;
     }
-    .bar > nav {
-      display: none;
+    nav {
+      gap: 16px;
     }
-    .menu-open,
     .fab {
       display: block;
     }
