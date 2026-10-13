@@ -1,7 +1,7 @@
 // Edit these to personalise the site.
 export const site = {
   name: 'Yeonseo Pyo',
-  siteTitle: '📦 Yeonseo Portfolio', // shown in the browser tab
+  siteTitle: 'Yeonseo Portfolio', // shown in the browser tab
   role: 'Packaging Designer',
   location: 'Canada',
   email: 'yeonseopyo@gmail.com',
