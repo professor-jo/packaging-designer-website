@@ -19,14 +19,16 @@ const phone = cardImage ? await getImage({ src: cardImage, widths: [400, 800], f
 <a class="card" href={url(`/work/${project.id}/`)} data-category={category} data-size={size}>
   <Frame class="media">
     <picture>
-      {phone && <source media="(max-width: 720px)" srcset={phone.srcSet.attribute} sizes="86vw" />}
-      <Image
-        src={cover}
-        alt={coverAlt}
-        widths={[480, 800, 1200]}
-        sizes="(max-width: 720px) 100vw, 66vw"
-        loading={eager ? 'eager' : 'lazy'}
-      />
+      {phone && <source media="(max-width: 720px)" srcSet={phone.srcSet.attribute} sizes="86vw" />}
+      {cover && (
+        <Image
+          src={cover}
+          alt={coverAlt}
+          widths={[480, 800, 1200]}
+          sizes="(max-width: 720px) 100vw, 66vw"
+          loading={eager ? 'eager' : 'lazy'}
+        />
+      )}
     </picture>
   </Frame>
   <div class="meta">
